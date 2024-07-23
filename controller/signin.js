@@ -1,1 +1,3 @@
-exports.handleSignin = (req, res) => {};
+exports.handleSignin = (req, res) => {
+  const { email, password } = req.body;
+};
