@@ -20,7 +20,16 @@ exports.handleSignin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    await loginUserSchema.validate(req.body, { abortEarly: false });
+    try {
+      await loginUserSchema.validate(req.body, { abortEarly: false });
+    } catch (err) {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({
+          status: false,
+          message: "Validation failed",
+        });
+      }
+    }
 
     const findUser = await prisma.user.findUnique({
       where: {
@@ -37,7 +46,7 @@ exports.handleSignin = async (req, res) => {
       const isMatch = await bcrypt.compare(password, findUser.password);
       if (isMatch) {
         const token = generateToken(findUser);
-        const { password: _, createdAt, ...others } = findUser;
+        const { password: _, ...others } = findUser;
         return res.status(200).json({ ...others, token, status: true });
       } else {
         return res.status(401).json({

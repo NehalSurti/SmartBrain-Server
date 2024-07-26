@@ -4,7 +4,17 @@ const { UserIdSchema } = require("../validation/userValidation.js");
 exports.handleProfileGet = async (req, res) => {
   try {
     const { id } = req.params;
-    await UserIdSchema.validate({ id: Number(id) }, { abortEarly: false });
+
+    try {
+      await UserIdSchema.validate({ id: Number(id) }, { abortEarly: false });
+    } catch (err) {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({
+          status: false,
+          message: "Validation failed",
+        });
+      }
+    }
 
     const findUser = await prisma.user.findUnique({
       where: {

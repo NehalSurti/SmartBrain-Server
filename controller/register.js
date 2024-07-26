@@ -20,7 +20,16 @@ exports.handleRegister = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    await registerUserSchema.validate(req.body, { abortEarly: false });
+    try {
+      await registerUserSchema.validate(req.body, { abortEarly: false });
+    } catch (err) {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({
+          status: false,
+          message: "Validation failed",
+        });
+      }
+    }
 
     const findUser = await prisma.user.findUnique({
       where: {

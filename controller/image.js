@@ -45,7 +45,7 @@ exports.handleApiCall = (req, res) => {
         for (const concept of output.data.concepts) {
           console.log(concept.name + " " + concept.value);
         }
-        res.status(200).json(response);
+        return res.status(200).json({ response, status: true });
       }
     );
   } catch (error) {
@@ -57,7 +57,17 @@ exports.handleApiCall = (req, res) => {
 exports.handleImage = async (req, res) => {
   try {
     const { id } = req.body;
-    await UserIdSchema.validate({ id: Number(id) }, { abortEarly: false });
+
+    try {
+      await UserIdSchema.validate({ id: Number(id) }, { abortEarly: false });
+    } catch (err) {
+      if (err.name === "ValidationError") {
+        return res.status(400).json({
+          status: false,
+          message: "Validation failed",
+        });
+      }
+    }
 
     const updatedUserEntries = await prisma.user.update({
       where: {
