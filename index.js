@@ -5,7 +5,7 @@ dotenv.config();
 
 const signinRouter = require("./routes/signin");
 const registerRouter = require("./routes/register");
-const profileRouter = require("./routes/profile");
+const userRouter = require("./routes/user");
 const imageRouter = require("./routes/image");
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use("/signin", signinRouter);
 app.use("/register", registerRouter);
-app.use("/profile", profileRouter);
+app.use("/users", userRouter);
 app.use("/image", imageRouter);
 
 app.listen(5000, () => {
