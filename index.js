@@ -7,6 +7,7 @@ const signinRouter = require("./routes/signin");
 const registerRouter = require("./routes/register");
 const userRouter = require("./routes/user");
 const imageRouter = require("./routes/image");
+const tokenVerifyRouter = require("./routes/tokenVerify");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/signin", signinRouter);
 app.use("/register", registerRouter);
 app.use("/users", userRouter);
 app.use("/image", imageRouter);
+app.use("/tokenVerify", tokenVerifyRouter);
 
 app.listen(5000, () => {
   console.log("Server Started");
