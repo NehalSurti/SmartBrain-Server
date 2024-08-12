@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "npx prisma generate && npm run build"
+    "build": "prisma generate && npm run build"
   },
   "keywords": [],
   "author": "",
