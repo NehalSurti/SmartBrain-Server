@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -14,11 +15,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/signin", signinRouter);
-app.use("/register", registerRouter);
-app.use("/users", userRouter);
-app.use("/image", imageRouter);
-app.use("/tokenVerify", tokenVerifyRouter);
+app.use(express.static("build"));
+
+app.use("/api/signin", signinRouter);
+app.use("/api/register", registerRouter);
+app.use("/api/users", userRouter);
+app.use("/api/image", imageRouter);
+app.use("/api/tokenVerify", tokenVerifyRouter);
+
+app.use("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.listen(5000, () => {
   console.log("Server Started");
