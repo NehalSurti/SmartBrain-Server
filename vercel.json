@@ -14,12 +14,13 @@
       "src": "/api/(.*)",
       "dest": "index.js"
     },
+
     {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "build/index.html"
     },
     {
-      "src": "/",
+      "src": "/(.*)",
       "dest": "build/index.html"
     },
     {
