@@ -15,8 +15,16 @@
       "dest": "index.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "src": "/signin",
+      "dest": "build/index.html"
+    },
+    {
+      "src": "/register",
+      "dest": "build/index.html"
+    },
+    {
+      "src": "/",
+      "dest": "build/index.html"
     },
     {
       "src": "/(.+)",
