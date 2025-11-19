@@ -25,15 +25,74 @@
 ## 🏗️ Architecture Overview
 
 ```mermaid
-flowchart LR
-	A[User Browser / SPA] -->|HTTP| B[Vercel / Static Frontend]
-	B -->|API Requests| C[Server (Express API)]
-	C --> D[Middleware: verifyToken]
-	C --> E[Prisma Client]
-	E --> F[(Database)]
-	C --> G[Clarifai API]
-	style A fill:#f9f,stroke:#333,stroke-width:1px
-	style C fill:#bbf,stroke:#333
+flowchart TB
+    %% Client Layer
+    subgraph Client["Client Layer"]
+        A[User Browser / React SPA]
+    end
+
+    %% Static Hosting
+    subgraph Hosting["Static Hosting"]
+        B[Vercel]
+    end
+
+    %% API Server
+    subgraph API["API Layer"]
+        C[SmartBrain Server<br/>Node.js + Express]
+    end
+
+    %% Middleware
+    subgraph Middleware["Middleware Pipeline"]
+        direction LR
+        D[Validation<br/>Yup]
+        E[Authentication<br/>JWT Verify]
+        D --> E
+    end
+
+    %% Business Logic
+    subgraph Backend["Application Layer"]
+        F[Controllers /<br/>Business Logic]
+    end
+
+    %% External Services & Data
+    subgraph Services["External Services"]
+        H[Clarifai API<br/>AI Inference]
+    end
+
+    subgraph Data["Data Layer"]
+        G[Prisma ORM]
+        J[(PostgreSQL<br/>Database)]
+    end
+
+    %% Connections
+    A -->|HTTPS| B
+    B -->|API Calls| C
+    C --> Middleware
+    Middleware --> F
+    F --> G
+    F --> H
+    G <--> J
+    H -->|AI Results| F
+    F -->|JSON Response| C
+    C -->|Response| B
+    B -->|Data| A
+
+    %% Styles
+    classDef clientStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef hostingStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef apiStyle fill:#bbdefb,stroke:#1565c0,stroke-width:2px
+    classDef middlewareStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef backendStyle fill:#dcedc8,stroke:#558b2f,stroke-width:2px
+    classDef serviceStyle fill:#ffe0b2,stroke:#ef6c00,stroke-width:2px
+    classDef dataStyle fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+
+    class A clientStyle
+    class B hostingStyle
+    class C apiStyle
+    class D,E middlewareStyle
+    class F backendStyle
+    class H serviceStyle
+    class G,I,J dataStyle
 ```
 
 ## 🎬 Demo Video
