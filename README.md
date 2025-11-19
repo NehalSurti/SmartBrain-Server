@@ -33,7 +33,7 @@ flowchart TB
 
     %% Static Hosting
     subgraph Hosting["Static Hosting"]
-        B[Vercel]
+        B[Vercel / CDN]
     end
 
     %% API Server
@@ -76,23 +76,6 @@ flowchart TB
     F -->|JSON Response| C
     C -->|Response| B
     B -->|Data| A
-
-    %% Styles
-    classDef clientStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef hostingStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef apiStyle fill:#bbdefb,stroke:#1565c0,stroke-width:2px
-    classDef middlewareStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef backendStyle fill:#dcedc8,stroke:#558b2f,stroke-width:2px
-    classDef serviceStyle fill:#ffe0b2,stroke:#ef6c00,stroke-width:2px
-    classDef dataStyle fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
-
-    class A clientStyle
-    class B hostingStyle
-    class C apiStyle
-    class D,E middlewareStyle
-    class F backendStyle
-    class H serviceStyle
-    class G,I,J dataStyle
 ```
 
 ## 🎬 Demo Video
